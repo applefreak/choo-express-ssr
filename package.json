@@ -1,7 +1,7 @@
 {
   "name": "choo-express-ssr",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple project boilerplate for Choo & Express with SSR",
   "main": "index.js",
   "scripts": {
     "start": "npm run clean && NODE_ENV=development webpack-dev-server",
@@ -10,9 +10,13 @@
     "prod": "NODE_ENV=production node ./server/prod.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": ["choo", "ssr", "express"],
   "author": "Poyu Chen <me@poyu.xyz>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/applefreak/choo-express-ssr.git"
+  },
   "dependencies": {
     "choo": "^6.12.1",
     "convict": "^4.3.0",
