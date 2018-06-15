@@ -1,6 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const ManifestPlugin = require('webpack-manifest-plugin')
 
 const babelOptions = {
@@ -15,7 +15,7 @@ module.exports = {
     style: './app/main.css'
   },
   output: {
-    filename: '[name].[chunkhash:8].js',
+    filename: '[name].[hash:8].js',
     path: path.resolve(__dirname, 'dist')
   },
   module: {
@@ -31,14 +31,10 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader',
-              options: { modules: false, importLoaders: 1 }
-            }
-          ]
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader'
+        ]
       },
       {
         // loads all assets from assets/ for use by common/assets.js
@@ -48,12 +44,15 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin({
-      filename: 'style.[hash:8].css'
+    new MiniCssExtractPlugin({
+      filename: 'style.[chunkhash:8].css'
     }),
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new ManifestPlugin()
   ],
   devServer: {
-    before: require('./server/dev')
+    before: require('./server/dev'),
+    hot: true
   }
 }
